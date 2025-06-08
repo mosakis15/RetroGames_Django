@@ -7,8 +7,7 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface GameApiService {
-
-    // GET παιχνίδια με φίλτρα (συμβατό με Django REST)
+    // GET games with filters (matches Django's retro-games/)
     @GET("retro-games/")
     suspend fun getGames(
         @Query("title") title: String?,
@@ -16,17 +15,17 @@ interface GameApiService {
         @Query("release_date__lte") dateTo: String?
     ): List<RetroGame>
 
-    // GET λεπτομέρειες παιχνιδιού με id
+    // GET game details by ID (matches Django's retro-games/<int:pk>/)
     @GET("retro-games/{id}/")
     suspend fun getGameDetails(@Path("id") id: Int): RetroGame
 
-    // POST για δημιουργία παιχνιδιού (με εικόνα)
+    // POST to create a game with image (matches Django's retro-games/)
     @Multipart
     @POST("retro-games/")
     suspend fun createGame(
         @Part("title") title: RequestBody,
         @Part("platform") platform: RequestBody,
         @Part("release_date") releaseDate: RequestBody,
-        @Part image: MultipartBody.Part
+        @Part cover_image: MultipartBody.Part
     ): Response<Unit>
 }

@@ -2,6 +2,7 @@ package com.example.retrogames.ui.results
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -49,9 +50,18 @@ fun ResultsScreen(title: String?, dateFrom: String?, dateTo: String?) {
     LaunchedEffect(true) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val result = RetrofitClient.apiService.getGames(title, dateFrom, dateTo)
+                Log.d("FILTERS", "title=$title, from=$dateFrom, to=$dateTo")
+
+                val result = RetrofitClient.apiService.getGames(
+                    title = title?.takeIf { it.isNotBlank() },
+                    dateFrom = dateFrom?.takeIf { it.isNotBlank() },
+                    dateTo = dateTo?.takeIf { it.isNotBlank() }
+                )
+
+                Log.d("API_RESULT", result.toString())
                 games = result
             } catch (e: Exception) {
+                Log.e("API_ERROR", "Error fetching games: ${e.message}", e)
                 snackbarHostState.showSnackbar("Σφάλμα φόρτωσης δεδομένων")
             } finally {
                 isLoading = false
