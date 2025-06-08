@@ -8,18 +8,21 @@ import retrofit2.http.*
 
 interface GameApiService {
 
-    @GET("api/games/")
+    // GET παιχνίδια με φίλτρα (συμβατό με Django REST)
+    @GET("retro-games/")
     suspend fun getGames(
         @Query("title") title: String?,
-        @Query("date_from") dateFrom: String?,
-        @Query("date_to") dateTo: String?
+        @Query("release_date__gte") dateFrom: String?,
+        @Query("release_date__lte") dateTo: String?
     ): List<RetroGame>
 
-    @GET("api/games/{id}/")
+    // GET λεπτομέρειες παιχνιδιού με id
+    @GET("retro-games/{id}/")
     suspend fun getGameDetails(@Path("id") id: Int): RetroGame
 
+    // POST για δημιουργία παιχνιδιού (με εικόνα)
     @Multipart
-    @POST("api/games/")
+    @POST("retro-games/")
     suspend fun createGame(
         @Part("title") title: RequestBody,
         @Part("platform") platform: RequestBody,

@@ -6,5 +6,5 @@ class RetroGame (
     val platform: String,
     val release_date: String,
     val cover_image: String,
-    val youtube_url: String
+    val youtube_video: String
 )

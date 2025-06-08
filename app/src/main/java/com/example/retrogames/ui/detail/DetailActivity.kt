@@ -19,7 +19,6 @@ import com.example.retrogames.data.model.RetroGame
 import com.example.retrogames.ui.theme.RetroGamesTheme
 import com.example.retrogames.util.RetrofitClient
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class DetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,7 +82,7 @@ fun DetailScreen(gameId: Int) {
                         )
                         Button(
                             onClick = {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.youtube_url))
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.youtube_video))
                                 context.startActivity(intent)
                             },
                             modifier = Modifier.fillMaxWidth()
